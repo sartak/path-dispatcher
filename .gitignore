@@ -11,3 +11,5 @@ MANIFEST.bak
 SIGNATURE
 cover_db/
 .prove
+MANIFEST.SKIP
+MYMETA.json
