@@ -1,5 +1,12 @@
 Revision history for Path-Dispatcher
 
+1.03 Tue Aug 30 2011
+        Provisional support for arbitrary payloads, not just code blocks, as results
+            See https://github.com/sartak/path-dispatcher/blob/master/t/200-payload.t
+        Eventually blocks will be deprecated, but not for a while. Internally blocks are
+        rewritten as payloads so if you're doing deep magic with PD you may be exposed to
+        that implementation detail.
+
 1.02 Tue Nov 2 2010
         Various improvements to the handling of $match->leftover with undef
 
