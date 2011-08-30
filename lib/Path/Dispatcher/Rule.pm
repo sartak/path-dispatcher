@@ -5,10 +5,9 @@ use Path::Dispatcher::Match;
 
 use constant match_class => "Path::Dispatcher::Match";
 
-has block => (
+has payload => (
     is        => 'ro',
-    isa       => 'CodeRef',
-    predicate => 'has_block',
+    predicate => 'has_payload',
 );
 
 has prefix => (
@@ -16,6 +15,16 @@ has prefix => (
     isa     => 'Bool',
     default => 0,
 );
+
+# support for deprecated "block" attribute
+sub block { shift->payload(@_) }
+sub has_block { shift->has_payload(@_) }
+override BUILDARGS => sub {
+    my $self = shift;
+    my $args = super;
+    $args->{payload} ||= delete $args->{block};
+    return $args;
+};
 
 sub match {
     my $self = shift;
@@ -59,9 +68,12 @@ sub _prefix_match {
 sub run {
     my $self = shift;
 
-    die "No codeblock to run" if !$self->has_block;
+    my $payload = $self->payload;
 
-    $self->block->(@_);
+    die "No codeblock to run" if !$payload;
+    die "Payload is not a coderef" if ref($payload) ne 'CODE';
+
+    $self->payload->(@_);
 }
 
 __PACKAGE__->meta->make_immutable;
