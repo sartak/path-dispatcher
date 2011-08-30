@@ -1,6 +1,7 @@
 use strict;
 use warnings;
 use Test::More;
+use Test::Fatal;
 use Path::Dispatcher;
 
 my $dispatcher = Path::Dispatcher->new(
@@ -19,6 +20,14 @@ my $match = $dispatch->first_match;
 ok($match->rule->isa('Path::Dispatcher::Rule::Regex'));
 ok($match->rule->payload, 'all the money');
 ok($match->payload, 'all the money');
+
+like(exception {
+    $dispatch->run
+}, qr/Payload is not a coderef/);
+
+like(exception {
+    $dispatcher->run('bye')
+}, qr/Payload is not a coderef/);
 
 done_testing;
 
