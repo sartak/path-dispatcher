@@ -19,6 +19,7 @@ has rule => (
     is       => 'ro',
     isa      => 'Path::Dispatcher::Rule',
     required => 1,
+    handles  => ['payload'],
 );
 
 has positional_captures => (
