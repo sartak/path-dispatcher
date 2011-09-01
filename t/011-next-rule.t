@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 use Test::More;
-use Test::Exception;
+use Test::Fatal;
 use Path::Dispatcher;
 
 my @calls;
@@ -27,15 +27,10 @@ $dispatcher->add_rule(
     ),
 );
 
-my $dispatch;
-lives_ok {
-    $dispatch = $dispatcher->dispatch('foo');
-};
+my $dispatch = $dispatcher->dispatch('foo');
 is_deeply([splice @calls], [], "no blocks called yet of course");
 
-lives_ok {
-    $dispatch->run;
-};
+$dispatch->run;
 is_deeply([splice @calls], ['on', 'last'], "correctly continued to the next rule");
 
 $dispatcher->add_rule(
@@ -49,9 +44,9 @@ $dispatcher->add_rule(
     ),
 );
 
-throws_ok {
+like(exception {
     $dispatcher->run('bar');
-} qr/Not a CODE reference/;
+}, qr/Not a CODE reference/);
 
 is_deeply([splice @calls], ['bar: before'], "regular dies pass through");
 

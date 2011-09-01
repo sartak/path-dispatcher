@@ -11,7 +11,7 @@ requires 'Any::Moose' => '0.12';
 requires 'Try::Tiny'  => '0.02';
 
 test_requires 'Test::More'      => '0.88';
-test_requires 'Test::Exception' => '0.27';
+test_requires 'Test::Fatal';
 
 manifest_skip;
 auto_manifest;

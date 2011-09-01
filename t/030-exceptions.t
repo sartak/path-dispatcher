@@ -1,27 +1,20 @@
 use strict;
 use warnings;
 use Test::More;
-use Test::Exception;
+use Test::Fatal;
 use Path::Dispatcher;
-
-{
-    package Moo;
-    use overload 'bool' => sub { 0 };
-}
-
-my $not_true = bless {}, 'Moo';
 
 my $dispatcher = Path::Dispatcher->new(
     rules => [
         Path::Dispatcher::Rule::Always->new(
-            block => sub { die $not_true; "foobar matched" },
+            block => sub { die "hi gang"; "foobar matched" },
         ),
     ],
 );
 
-throws_ok(sub {
+like(exception {
     $dispatcher->run("foobar");
-}, $not_true);
+}, qr/hi gang/);
 
 done_testing;
 

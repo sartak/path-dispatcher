@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 use Test::More;
-use Test::Exception;
+use Test::Fatal;
 use Path::Dispatcher;
 
 my $dispatcher = Path::Dispatcher->new(
@@ -12,9 +12,9 @@ my $dispatcher = Path::Dispatcher->new(
     ],
 );
 
-throws_ok {
+like(exception {
     $dispatcher->dispatch('foo');
-} qr/Results returned from _match must be a hashref/;
+}, qr/Results returned from _match must be a hashref/);
 
 done_testing;
 
