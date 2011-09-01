@@ -1,5 +1,9 @@
 Revision history for Path-Dispatcher
 
+1.04 Thu Sep 1 2011
+        Explicitly depend on Test::Fatal (reported by Jérôme Quelin  [rt.cpan.org #70666])
+        Convert all tests from Test::Exception to Test::Fatal
+
 1.03 Tue Aug 30 2011
         Provisional support for arbitrary payloads, not just code blocks, as results
             See https://github.com/sartak/path-dispatcher/blob/master/t/200-payload.t
