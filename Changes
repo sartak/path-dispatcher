@@ -1,5 +1,9 @@
 Revision history for Path-Dispatcher
 
+1.05 Thu Mar 14 2013
+        eval q{$'} before regex match when needed to soothe bleadperl
+            Thanks Dave Mitchell! http://www.nntp.perl.org/group/perl.perl5.porters/2013/03/msg200156.html
+
 1.04 Thu Sep 1 2011
         Explicitly depend on Test::Fatal (reported by Jérôme Quelin  [rt.cpan.org #70666])
         Convert all tests from Test::Exception to Test::Fatal
