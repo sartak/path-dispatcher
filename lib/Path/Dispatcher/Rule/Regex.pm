@@ -14,6 +14,11 @@ sub _match {
     my $self = shift;
     my $path = shift;
 
+    # davem++ http://www.nntp.perl.org/group/perl.perl5.porters/2013/03/msg200156.html
+    if ($self->prefix) {
+        eval q{$'};
+    }
+
     return unless my @positional = $path->path =~ $self->regex;
 
     my %named = $named_captures->();
