@@ -1,9 +1,10 @@
 package Path::Dispatcher::Role::Rules;
-use Any::Moose '::Role';
+use Carp;
+use Moo::Role;
 
 has _rules => (
     is       => 'ro',
-    isa      => 'ArrayRef',
+    isa      => sub { die "not an ArrayRef" unless 'ARRAY' eq ref $_[0] },
     init_arg => 'rules',
     default  => sub { [] },
 );
@@ -30,7 +31,7 @@ sub unshift_rule {
 
 sub rules { @{ shift->{_rules} } }
 
-no Any::Moose;
+no Moo::Role;
 
 1;
 

@@ -1,10 +1,10 @@
 package Path::Dispatcher::Rule::CodeRef;
-use Any::Moose;
+use Moo;
 extends 'Path::Dispatcher::Rule';
 
 has matcher => (
     is       => 'ro',
-    isa      => 'CodeRef',
+    isa      => sub { die "not a CodeRef" unless 'CODE' eq ref $_[0] },
     required => 1,
 );
 
@@ -17,7 +17,7 @@ sub _match {
 }
 
 __PACKAGE__->meta->make_immutable;
-no Any::Moose;
+no Moo;
 
 1;
 

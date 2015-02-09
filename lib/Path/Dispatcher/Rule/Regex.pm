@@ -1,10 +1,10 @@
 package Path::Dispatcher::Rule::Regex;
-use Any::Moose;
+use Moo;
 extends 'Path::Dispatcher::Rule';
 
 has regex => (
     is       => 'ro',
-    isa      => 'RegexpRef',
+    isa      => sub { die "not a Regexp" unless 'Regexp' eq ref $_[0] },
     required => 1,
 );
 
@@ -39,7 +39,7 @@ sub _match {
 }
 
 __PACKAGE__->meta->make_immutable;
-no Any::Moose;
+no Moo;
 
 1;
 

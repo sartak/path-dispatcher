@@ -1,16 +1,18 @@
 package Path::Dispatcher::Rule::Eq;
-use Any::Moose;
+use Moo;
+
 extends 'Path::Dispatcher::Rule';
 
 has string => (
     is       => 'ro',
-    isa      => 'Str',
+    isa      => sub { die "$_[0] is not a String" unless( defined $_[0] && '' eq ref $_[0] ) },
     required => 1,
 );
 
+# '' or 0 will be accepted for false, 1 for true.
 has case_sensitive => (
     is      => 'ro',
-    isa     => 'Bool',
+    isa     => sub { die "$_[0] is not Bool" unless( ( $_[0] == !!$_[0] ) or ( 0 == $_[0] ) ) },
     default => 1,
 );
 
@@ -67,7 +69,7 @@ sub complete {
 }
 
 __PACKAGE__->meta->make_immutable;
-no Any::Moose;
+no Moo;
 
 1;
 

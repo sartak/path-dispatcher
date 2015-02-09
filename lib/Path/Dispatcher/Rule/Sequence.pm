@@ -1,12 +1,12 @@
 package Path::Dispatcher::Rule::Sequence;
-use Any::Moose;
+use Moo;
 
 extends 'Path::Dispatcher::Rule';
 with 'Path::Dispatcher::Role::Rules';
 
 has delimiter => (
     is      => 'ro',
-    isa     => 'Str',
+    isa     => sub { die "$_[0] is not a String" unless( defined $_[0] && '' eq ref $_[0] ) },
     default => ' ',
 );
 
@@ -79,7 +79,7 @@ sub untokenize {
 }
 
 __PACKAGE__->meta->make_immutable;
-no Any::Moose;
+no Moo;
 
 1;
 
