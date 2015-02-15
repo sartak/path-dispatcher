@@ -2,7 +2,7 @@ package Path::Dispatcher;
 use Any::Moose;
 use 5.008001;
 
-our $VERSION = '1.05';
+# VERSION
 
 use Path::Dispatcher::Rule;
 use Path::Dispatcher::Dispatch;
