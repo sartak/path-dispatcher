@@ -4,6 +4,7 @@ Makefile
 Makefile.old
 blib/
 inc/
+/.build/
 *.sw[po]
 pm_to_blib
 MANIFEST
