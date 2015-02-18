@@ -1,5 +1,10 @@
 Revision history for Path-Dispatcher
 
+1.06 2015-02-18
+        Switch packaging system to Dist::Zilla (David Pottage)
+            https://github.com/sartak/path-dispatcher/pull/1
+            Thanks to the CPAN Pull Request Challenge :)
+
 1.05 Thu Mar 14 2013
         eval q{$'} before regex match when needed to soothe bleadperl
             Thanks Dave Mitchell! http://www.nntp.perl.org/group/perl.perl5.porters/2013/03/msg200156.html
