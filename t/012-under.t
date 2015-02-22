@@ -83,7 +83,7 @@ eval {
         ),
     );
 };
-like($@, qr/Attribute \(predicate\) does not pass the type constraint /, "predicate MUST match just a prefix");
+like($@, qr/isa check for "predicate" failed/, "predicate MUST match just a prefix");
 
 done_testing;
 
