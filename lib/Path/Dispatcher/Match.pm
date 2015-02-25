@@ -1,42 +1,49 @@
 package Path::Dispatcher::Match;
-use Any::Moose;
-
+use Moo;
 use Path::Dispatcher::Path;
 use Path::Dispatcher::Rule;
 
 has path => (
     is       => 'ro',
-    isa      => 'Path::Dispatcher::Path',
+    isa      => sub { die "$_[0] not isa Path::Dispatcher::Path" unless $_[0]->isa('Path::Dispatcher::Path') },
     required => 1,
 );
 
 has leftover => (
     is  => 'ro',
-    isa => 'Str',
+    isa => sub { die "$_[0] is not a String" unless( defined $_[0] && '' eq ref $_[0] ) },
 );
 
 has rule => (
     is       => 'ro',
-    isa      => 'Path::Dispatcher::Rule',
+    isa      => sub { die "$_[0] not isa Path::Dispatcher::Rule" unless $_[0]->isa('Path::Dispatcher::Rule') },
     required => 1,
     handles  => ['payload'],
 );
 
 has positional_captures => (
     is      => 'ro',
-    isa     => 'ArrayRef[Str|Undef]',
+    isa     => sub { die "$_[0] is not an ArrayRef" unless 'ARRAY' eq ref $_[0] },
     default => sub { [] },
 );
 
 has named_captures => (
     is      => 'ro',
-    isa     => 'HashRef[Str|Undef]',
+    isa     => sub {
+        die "$_[0] is not a HashRef" unless 'HASH' eq ref $_[0];
+
+        foreach my $value ( values %{$_[0]} ) {
+            next unless defined $value;  # undef is allowed
+            die "Not a String"
+                if ref $value;
+        }
+    },
     default => sub { {} },
 );
 
 has parent => (
     is        => 'ro',
-    isa       => 'Path::Dispatcher::Match',
+    isa      => sub { die "$_[0] not isa Path::Dispatcher::Match" unless $_[0]->isa('Path::Dispatcher::Match') },
     predicate => 'has_parent',
 );
 
@@ -65,7 +72,7 @@ sub named {
 }
 
 __PACKAGE__->meta->make_immutable;
-no Any::Moose;
+no Moo;
 
 1;
 

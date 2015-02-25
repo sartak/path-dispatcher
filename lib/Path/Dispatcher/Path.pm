@@ -1,29 +1,30 @@
 package Path::Dispatcher::Path;
-use Any::Moose;
+use Moo;
 
 use overload q{""} => sub { shift->path };
 
 has path => (
     is        => 'ro',
-    isa       => 'Str',
+    isa       => sub { die "$_[0] is not a String" unless( defined $_[0] && '' eq ref $_[0] ) },
     predicate => 'has_path',
 );
 
 has metadata => (
     is        => 'ro',
-    isa       => 'HashRef',
+    isa       => sub { die "not an ArrayRef" unless 'HASH' eq ref $_[0] },
     predicate => 'has_metadata',
 );
 
 # allow Path::Dispatcher::Path->new($path)
-sub BUILDARGS {
+around BUILDARGS => sub {
+    my $orig = shift;
     my $self = shift;
 
     if (@_ == 1 && !ref($_[0])) {
         unshift @_, 'path';
     }
 
-    $self->SUPER::BUILDARGS(@_);
+    $self->$orig(@_);
 };
 
 sub clone_path {
@@ -41,7 +42,7 @@ sub get_metadata {
 }
 
 __PACKAGE__->meta->make_immutable;
-no Any::Moose;
+no Moo;
 
 1;
 

@@ -1,23 +1,22 @@
 package Path::Dispatcher::Rule::Tokens;
-use Any::Moose;
+use Moo;
 extends 'Path::Dispatcher::Rule';
 
 has tokens => (
     is         => 'ro',
-    isa        => 'ArrayRef',
-    auto_deref => 1,
+    isa        => sub { die "not an ArrayRef" unless 'ARRAY' eq ref $_[0] },
     required   => 1,
 );
 
 has delimiter => (
     is      => 'ro',
-    isa     => 'Str',
+    isa     => sub { die "$_[0] is not a String" unless( defined $_[0] && '' eq ref $_[0] ) },
     default => ' ',
 );
 
 has case_sensitive => (
     is      => 'ro',
-    isa     => 'Bool',
+    isa     => sub { die "$_[0] is not Bool" unless( ( $_[0] == !!$_[0] ) or ( 0 == $_[0] ) ) },
     default => 1,
 );
 
@@ -26,7 +25,7 @@ sub _match_as_far_as_possible {
     my $path = shift;
 
     my @got      = $self->tokenize($path->path);
-    my @expected = $self->tokens;
+    my @expected = @{ $self->tokens };
     my @matched;
 
     while (@got && @expected) {
@@ -139,7 +138,7 @@ sub untokenize {
 }
 
 __PACKAGE__->meta->make_immutable;
-no Any::Moose;
+no Moo;
 
 1;
 

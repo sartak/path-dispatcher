@@ -1,16 +1,17 @@
 package Path::Dispatcher::Rule::Metadata;
-use Any::Moose;
+use Moo;
+
 extends 'Path::Dispatcher::Rule';
 
 has field => (
     is       => 'ro',
-    isa      => 'Str',
+    isa      => sub { die "$_[0] is not a String" unless( defined $_[0] && '' eq ref $_[0] ) },
     required => 1,
 );
 
 has matcher => (
     is       => 'ro',
-    isa      => 'Path::Dispatcher::Rule',
+    isa      => sub { die "$_[0] not isa Path::Dispatcher::Rule" unless $_[0]->isa('Path::Dispatcher::Rule') },
     required => 1,
 );
 
@@ -29,7 +30,7 @@ sub _match {
 }
 
 __PACKAGE__->meta->make_immutable;
-no Any::Moose;
+no Moo;
 
 1;
 

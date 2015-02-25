@@ -1,10 +1,10 @@
 package Path::Dispatcher::Rule::Dispatch;
-use Any::Moose;
+use Moo;
 extends 'Path::Dispatcher::Rule';
 
 has dispatcher => (
     is       => 'ro',
-    isa      => 'Path::Dispatcher',
+    isa      => sub { die "$_[0] not isa Path::Dispatcher" unless $_[0]->isa('Path::Dispatcher') },
     required => 1,
     handles  => ['rules', 'complete'],
 );
@@ -18,7 +18,7 @@ sub match {
 }
 
 __PACKAGE__->meta->make_immutable;
-no Any::Moose;
+no Moo;
 
 1;
 

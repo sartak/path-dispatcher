@@ -1,5 +1,9 @@
 Revision history for Path-Dispatcher
 
+1.07 2015-02-25
+        Switch from Any::Moose (Now deprecated) to Moo (David Pottage)
+            https://github.com/sartak/path-dispatcher/pull/3
+
 1.06 2015-02-18
         Switch packaging system to Dist::Zilla (David Pottage)
             https://github.com/sartak/path-dispatcher/pull/1
