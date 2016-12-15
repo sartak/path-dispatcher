@@ -22,7 +22,10 @@ sub has_block { shift->has_payload(@_) }
 override BUILDARGS => sub {
     my $self = shift;
     my $args = super;
-    $args->{payload} ||= delete $args->{block};
+
+    $args->{payload} ||= delete $args->{block}
+        if exists $args->{block};
+
     return $args;
 };
 

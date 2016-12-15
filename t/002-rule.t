@@ -26,5 +26,15 @@ is_deeply([splice @calls], [{
     args => [],
 }], "block called on ->run");
 
+my $no_block = Path::Dispatcher::Rule::Regex->new(
+    regex => qr/^(.{32})/,
+);
+
+ok($no_block);
+ok(!$no_block->has_block);
+ok(!$no_block->has_payload);
+is($no_block->block, undef);
+is($no_block->payload, undef);
+
 done_testing;
 
