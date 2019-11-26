@@ -1,42 +1,44 @@
 package Path::Dispatcher::Match;
-use Any::Moose;
+use Moo;
 
+use Type::Tiny::Class;
+use Types::Standard qw( Str Int ArrayRef HashRef Undef);
 use Path::Dispatcher::Path;
 use Path::Dispatcher::Rule;
 
 has path => (
     is       => 'ro',
-    isa      => 'Path::Dispatcher::Path',
+    isa      => Type::Tiny::Class->new( class => 'Path::Dispatcher::Path'),
     required => 1,
 );
 
 has leftover => (
     is  => 'ro',
-    isa => 'Str',
+    isa => Str,
 );
 
 has rule => (
     is       => 'ro',
-    isa      => 'Path::Dispatcher::Rule',
+    isa      => Type::Tiny::Class->new( class => 'Path::Dispatcher::Rule'),
     required => 1,
     handles  => ['payload'],
 );
 
 has positional_captures => (
     is      => 'ro',
-    isa     => 'ArrayRef[Str|Undef]',
+    isa     => ArrayRef[Str|Undef],
     default => sub { [] },
 );
 
 has named_captures => (
     is      => 'ro',
-    isa     => 'HashRef[Str|Undef]',
+    isa     => HashRef[Str|Undef],
     default => sub { {} },
 );
 
 has parent => (
     is        => 'ro',
-    isa       => 'Path::Dispatcher::Match',
+    isa       => Type::Tiny::Class->new( class => 'Path::Dispatcher::Match'),
     predicate => 'has_parent',
 );
 
@@ -65,7 +67,7 @@ sub named {
 }
 
 __PACKAGE__->meta->make_immutable;
-no Any::Moose;
+no Moo;
 
 1;
 

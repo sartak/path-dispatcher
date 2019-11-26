@@ -1,12 +1,13 @@
 package Path::Dispatcher::Rule::Sequence;
-use Any::Moose;
+use Moo;
+use Types::Standard qw( Str Int ArrayRef HashRef Bool RegexpRef);
 
 extends 'Path::Dispatcher::Rule';
 with 'Path::Dispatcher::Role::Rules';
 
 has delimiter => (
     is      => 'ro',
-    isa     => 'Str',
+    isa     => Str,
     default => ' ',
 );
 
@@ -79,7 +80,7 @@ sub untokenize {
 }
 
 __PACKAGE__->meta->make_immutable;
-no Any::Moose;
+no Moo;
 
 1;
 

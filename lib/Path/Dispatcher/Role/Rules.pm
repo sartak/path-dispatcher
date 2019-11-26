@@ -1,9 +1,11 @@
 package Path::Dispatcher::Role::Rules;
-use Any::Moose '::Role';
+use Moo::Role;
+use Carp qw(confess);
+use Types::Standard qw( Str Int ArrayRef HashRef );
 
 has _rules => (
     is       => 'ro',
-    isa      => 'ArrayRef',
+    isa      => ArrayRef,
     init_arg => 'rules',
     default  => sub { [] },
 );
@@ -30,7 +32,7 @@ sub unshift_rule {
 
 sub rules { @{ shift->{_rules} } }
 
-no Any::Moose;
+no Moo::Role;
 
 1;
 

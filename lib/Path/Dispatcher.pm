@@ -1,9 +1,9 @@
 package Path::Dispatcher;
-use Any::Moose;
+use Moo;
 use 5.008001;
 
 # VERSION
-
+use Scalar::Util 'blessed';
 use Path::Dispatcher::Rule;
 use Path::Dispatcher::Dispatch;
 use Path::Dispatcher::Path;
@@ -72,7 +72,7 @@ sub _autobox_path {
 }
 
 __PACKAGE__->meta->make_immutable;
-no Any::Moose;
+no Moo;
 
 1;
 

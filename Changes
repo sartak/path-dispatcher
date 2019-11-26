@@ -1,5 +1,9 @@
 Revision history for Path-Dispatcher
 
+1.07 2019-11-26
+        Switch from Any::Moose to Moo and Types::Standard
+        based on PRs from chresomanci and hashbangperl
+
 1.06 2015-02-18
         Switch packaging system to Dist::Zilla (David Pottage)
             https://github.com/sartak/path-dispatcher/pull/1

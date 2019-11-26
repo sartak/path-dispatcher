@@ -1,12 +1,14 @@
 package Path::Dispatcher::Dispatch;
-use Any::Moose;
+use Moo;
 use Try::Tiny;
+use Carp qw(confess);
+use Types::Standard qw(ArrayRef);
 
 use Path::Dispatcher::Match;
 
 has _matches => (
     is        => 'ro',
-    isa       => 'ArrayRef',
+    isa       => ArrayRef,
     default   => sub { [] },
 );
 
@@ -61,7 +63,8 @@ sub run {
 }
 
 __PACKAGE__->meta->make_immutable;
-no Any::Moose;
+
+no Moo;
 
 1;
 

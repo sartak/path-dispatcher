@@ -1,5 +1,5 @@
 package Path::Dispatcher::Rule::Alternation;
-use Any::Moose;
+use Moo;
 extends 'Path::Dispatcher::Rule';
 
 with 'Path::Dispatcher::Role::Rules';
@@ -25,7 +25,7 @@ sub complete {
 }
 
 __PACKAGE__->meta->make_immutable;
-no Any::Moose;
+no Moo;
 
 1;
 

@@ -1,10 +1,12 @@
 package Path::Dispatcher::Rule::CodeRef;
-use Any::Moose;
+use Moo;
+
+use Types::Standard qw( Str Int ArrayRef HashRef CodeRef);
 extends 'Path::Dispatcher::Rule';
 
 has matcher => (
     is       => 'ro',
-    isa      => 'CodeRef',
+    isa      => CodeRef,
     required => 1,
 );
 
@@ -17,7 +19,7 @@ sub _match {
 }
 
 __PACKAGE__->meta->make_immutable;
-no Any::Moose;
+no Moo;
 
 1;
 
