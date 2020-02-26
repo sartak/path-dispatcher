@@ -19,7 +19,7 @@ has prefix => (
 
 # support for deprecated "block" attribute
 sub block { shift->payload(@_) }
-sub has_block { shift->has_payload(@_) };
+sub has_block { shift->has_payload(@_) }
 around BUILDARGS => sub {
     my $orig = shift;
     my $self = shift;

@@ -6,7 +6,7 @@ use Path::Dispatcher;
 {
     package My::Rule::NamedEnum;
     use Moo;
-    use Types::Standard qw( Str Int ArrayRef HashRef RegexpRef );
+    use Types::Standard qw( Str RegexpRef );
     extends 'Path::Dispatcher::Rule';
 
     has name => (
