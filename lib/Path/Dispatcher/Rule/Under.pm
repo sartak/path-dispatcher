@@ -1,18 +1,21 @@
 package Path::Dispatcher::Rule::Under;
 use Moo;
+use Type::Tiny;
+use Type::Utils qw(class_type);
 
 extends 'Path::Dispatcher::Rule';
 with 'Path::Dispatcher::Role::Rules';
 
+my $PREFIX_RULE_TYPE = "Type::Tiny"->new(
+    name       => "PrefixRule",
+    parent     => class_type("Path::Dispatcher::Rule"),
+    constraint => sub { return ( shift()->prefix ) ? 1 : 0 },
+    message    => sub { "This rule ($_) does not match just prefixes!" },
+);
+
 has predicate => (
     is  => 'ro',
-    isa => sub {
-        die "$_[0] not isa Path::Dispatcher::Rule"
-	    unless $_[0]->isa('Path::Dispatcher::Rule');
-	
-        die "This rule ($_[0]) does not match just prefixes!"
-            unless $_[0]->prefix;
-    },
+    isa => $PREFIX_RULE_TYPE
 );
 
 sub match {

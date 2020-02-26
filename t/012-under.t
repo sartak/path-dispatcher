@@ -83,7 +83,7 @@ eval {
         ),
     );
 };
-like($@, qr/isa check for "predicate" failed/, "predicate MUST match just a prefix");
+like($@, qr/This rule \(.*?\) does not match just prefixes/, "predicate MUST match just a prefix");
 
 done_testing;
 
