@@ -1,14 +1,14 @@
 package Path::Dispatcher::Match;
 use Moo;
 
-use Type::Tiny::Class;
+use Type::Utils qw(class_type);
 use Types::Standard qw( Str Int ArrayRef HashRef Undef);
 use Path::Dispatcher::Path;
 use Path::Dispatcher::Rule;
 
 has path => (
     is       => 'ro',
-    isa      => Type::Tiny::Class->new( class => 'Path::Dispatcher::Path'),
+    isa      => class_type('Path::Dispatcher::Path'),
     required => 1,
 );
 
@@ -19,7 +19,7 @@ has leftover => (
 
 has rule => (
     is       => 'ro',
-    isa      => Type::Tiny::Class->new( class => 'Path::Dispatcher::Rule'),
+    isa      => class_type('Path::Dispatcher::Rule'),
     required => 1,
     handles  => ['payload'],
 );
@@ -38,7 +38,7 @@ has named_captures => (
 
 has parent => (
     is        => 'ro',
-    isa       => Type::Tiny::Class->new( class => 'Path::Dispatcher::Match'),
+    isa      => class_type('Path::Dispatcher::Match'),
     predicate => 'has_parent',
 );
 

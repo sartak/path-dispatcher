@@ -1,13 +1,13 @@
 package Path::Dispatcher::Rule::Dispatch;
 use Moo;
-use Type::Tiny::Class;
+use Type::Utils qw(class_type);
 use Types::Standard qw( Str Int ArrayRef HashRef );
 
 extends 'Path::Dispatcher::Rule';
 
 has dispatcher => (
     is       => 'ro',
-    isa      => Type::Tiny::Class->new( class => 'Path::Dispatcher'),
+    isa      => class_type("Path::Dispatcher"),
     required => 1,
     handles  => ['rules', 'complete'],
 );

@@ -1,6 +1,6 @@
 package Path::Dispatcher::Rule::Metadata;
 use Moo;
-use Type::Tiny::Class;
+use Type::Utils qw(class_type);
 use Types::Standard qw( Str Int ArrayRef HashRef Bool);
 extends 'Path::Dispatcher::Rule';
 
@@ -12,7 +12,7 @@ has field => (
 
 has matcher => (
     is       => 'ro',
-    isa      => Type::Tiny::Class->new( class => 'Path::Dispatcher::Rule'),
+    isa      => class_type("Path::Dispatcher::Rule"),
     required => 1,
 );
 
