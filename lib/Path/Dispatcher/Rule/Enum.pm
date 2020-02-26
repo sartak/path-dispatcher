@@ -1,16 +1,18 @@
 package Path::Dispatcher::Rule::Enum;
-use Any::Moose;
+use Moo;
+use Types::Standard qw( Str Int ArrayRef HashRef Bool);
+
 extends 'Path::Dispatcher::Rule';
 
 has enum => (
     is       => 'ro',
-    isa      => 'ArrayRef[Str]',
+    isa      => ArrayRef[Str],
     required => 1,
 );
 
 has case_sensitive => (
     is      => 'ro',
-    isa     => 'Bool',
+    isa     => Bool,
     default => 1,
 );
 
@@ -86,7 +88,7 @@ sub complete {
 }
 
 __PACKAGE__->meta->make_immutable;
-no Any::Moose;
+no Moo;
 
 1;
 

@@ -1,16 +1,18 @@
 package Path::Dispatcher::Rule::Metadata;
-use Any::Moose;
+use Moo;
+use Type::Utils qw(class_type);
+use Types::Standard qw( Str Int ArrayRef HashRef Bool);
 extends 'Path::Dispatcher::Rule';
 
 has field => (
     is       => 'ro',
-    isa      => 'Str',
+    isa      => Str,
     required => 1,
 );
 
 has matcher => (
     is       => 'ro',
-    isa      => 'Path::Dispatcher::Rule',
+    isa      => class_type("Path::Dispatcher::Rule"),
     required => 1,
 );
 
@@ -29,7 +31,7 @@ sub _match {
 }
 
 __PACKAGE__->meta->make_immutable;
-no Any::Moose;
+no Moo;
 
 1;
 

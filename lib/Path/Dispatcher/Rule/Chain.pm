@@ -1,10 +1,11 @@
 package Path::Dispatcher::Rule::Chain;
-use Any::Moose;
+use Moo;
 extends 'Path::Dispatcher::Rule::Always';
 
-override payload => sub {
+around payload => sub {
+    my $orig    = shift;
     my $self    = shift;
-    my $payload = super;
+    my $payload = $self->$orig(@_);
 
     if (!@_) {
         return sub {
@@ -17,7 +18,7 @@ override payload => sub {
 };
 
 __PACKAGE__->meta->make_immutable;
-no Any::Moose;
+no Moo;
 
 1;
 

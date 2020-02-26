@@ -1,18 +1,21 @@
 package Path::Dispatcher::Rule::Under;
-use Any::Moose;
-use Any::Moose '::Util::TypeConstraints';
+use Moo;
+use Type::Tiny;
+use Type::Utils qw(class_type);
 
 extends 'Path::Dispatcher::Rule';
 with 'Path::Dispatcher::Role::Rules';
 
-subtype 'Path::Dispatcher::PrefixRule'
-     => as 'Path::Dispatcher::Rule'
-     => where { $_->prefix }
-     => message { "This rule ($_) does not match just prefixes!" };
+my $PREFIX_RULE_TYPE = "Type::Tiny"->new(
+    name       => "PrefixRule",
+    parent     => class_type("Path::Dispatcher::Rule"),
+    constraint => sub { return ( shift()->prefix ) ? 1 : 0 },
+    message    => sub { "This rule ($_) does not match just prefixes!" },
+);
 
 has predicate => (
     is  => 'ro',
-    isa => 'Path::Dispatcher::PrefixRule',
+    isa => $PREFIX_RULE_TYPE
 );
 
 sub match {
@@ -71,7 +74,7 @@ sub complete {
 }
 
 __PACKAGE__->meta->make_immutable;
-no Any::Moose;
+no Moo;
 
 1;
 

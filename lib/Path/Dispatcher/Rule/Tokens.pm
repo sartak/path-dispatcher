@@ -1,23 +1,25 @@
 package Path::Dispatcher::Rule::Tokens;
-use Any::Moose;
+use Moo;
+use Types::Standard qw( Str Int ArrayRef HashRef Bool RegexpRef);
+
 extends 'Path::Dispatcher::Rule';
 
 has tokens => (
     is         => 'ro',
-    isa        => 'ArrayRef',
+    isa        => ArrayRef,
     auto_deref => 1,
     required   => 1,
 );
 
 has delimiter => (
     is      => 'ro',
-    isa     => 'Str',
+    isa     => Str,
     default => ' ',
 );
 
 has case_sensitive => (
     is      => 'ro',
-    isa     => 'Bool',
+    isa     => Bool,
     default => 1,
 );
 
@@ -26,7 +28,7 @@ sub _match_as_far_as_possible {
     my $path = shift;
 
     my @got      = $self->tokenize($path->path);
-    my @expected = $self->tokens;
+    my @expected = @{ $self->tokens };
     my @matched;
 
     while (@got && @expected) {
@@ -139,7 +141,7 @@ sub untokenize {
 }
 
 __PACKAGE__->meta->make_immutable;
-no Any::Moose;
+no Moo;
 
 1;
 

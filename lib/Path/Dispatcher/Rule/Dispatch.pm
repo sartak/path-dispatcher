@@ -1,10 +1,13 @@
 package Path::Dispatcher::Rule::Dispatch;
-use Any::Moose;
+use Moo;
+use Type::Utils qw(class_type);
+use Types::Standard qw( Str Int ArrayRef HashRef );
+
 extends 'Path::Dispatcher::Rule';
 
 has dispatcher => (
     is       => 'ro',
-    isa      => 'Path::Dispatcher',
+    isa      => class_type("Path::Dispatcher"),
     required => 1,
     handles  => ['rules', 'complete'],
 );
@@ -18,7 +21,7 @@ sub match {
 }
 
 __PACKAGE__->meta->make_immutable;
-no Any::Moose;
+no Moo;
 
 1;
 

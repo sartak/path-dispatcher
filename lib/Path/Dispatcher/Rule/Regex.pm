@@ -1,10 +1,12 @@
 package Path::Dispatcher::Rule::Regex;
-use Any::Moose;
+use Moo;
+use Types::Standard qw( Str Int ArrayRef HashRef Bool RegexpRef);
+
 extends 'Path::Dispatcher::Rule';
 
 has regex => (
     is       => 'ro',
-    isa      => 'RegexpRef',
+    isa      => RegexpRef,
     required => 1,
 );
 
@@ -39,7 +41,7 @@ sub _match {
 }
 
 __PACKAGE__->meta->make_immutable;
-no Any::Moose;
+no Moo;
 
 1;
 

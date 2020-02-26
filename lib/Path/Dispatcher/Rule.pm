@@ -1,6 +1,7 @@
 package Path::Dispatcher::Rule;
-use Any::Moose;
+use Moo;
 
+use Types::Standard qw( Str Int ArrayRef HashRef Bool);
 use Path::Dispatcher::Match;
 
 use constant match_class => "Path::Dispatcher::Match";
@@ -12,17 +13,18 @@ has payload => (
 
 has prefix => (
     is      => 'ro',
-    isa     => 'Bool',
+    isa     => Bool,
     default => 0,
 );
 
 # support for deprecated "block" attribute
 sub block { shift->payload(@_) }
 sub has_block { shift->has_payload(@_) }
-override BUILDARGS => sub {
+around BUILDARGS => sub {
+    my $orig = shift;
     my $self = shift;
-    my $args = super;
 
+    my $args = $self->$orig(@_);
     $args->{payload} ||= delete $args->{block}
         if exists $args->{block};
 
@@ -80,7 +82,7 @@ sub run {
 }
 
 __PACKAGE__->meta->make_immutable;
-no Any::Moose;
+no Moo;
 
 # don't require others to load our subclasses explicitly
 require Path::Dispatcher::Rule::Alternation;
